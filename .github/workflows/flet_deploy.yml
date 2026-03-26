@@ -22,8 +22,9 @@ jobs:
 
       - name: Build Web
         run: |
-          # O comando 'yes' responde 'y' para todas as perguntas do Flet automaticamente
-          yes | flet build web --no-interaction
+          # Usamos o export para dizer ao Flet que não há ninguém para digitar nada
+          export FLET_NON_INTERACTIVE=true
+          flet build web
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
