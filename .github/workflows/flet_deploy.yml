@@ -2,7 +2,7 @@ name: Deploy Flet App to Pages
 
 on:
   push:
-    branches: [ main, master ] # Funciona em qualquer nome de branch
+    branches: [ main ]
 
 jobs:
   build:
@@ -15,21 +15,15 @@ jobs:
         with:
           python-version: '3.12'
 
-      # ESTA É A PARTE QUE FALTAVA: Instala o Flutter antes do Flet pedir
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.29.0' # Versão estável compatível
-          channel: 'stable'
-
       - name: Install Dependencies
         run: |
           pip install flet
-          # Se você tiver outras bibliotecas, o GitHub vai ler seu requirements.txt
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-           - name: Build Web
-          run: flet build web --no-interaction
+      - name: Build Web
+        run: |
+          # O comando 'yes' responde 'y' para todas as perguntas do Flet automaticamente
+          yes | flet build web --no-interaction
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
