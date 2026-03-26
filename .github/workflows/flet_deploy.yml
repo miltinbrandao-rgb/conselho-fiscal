@@ -15,7 +15,6 @@ jobs:
         with:
           python-version: '3.12'
 
-      # ESSA É A PARTE QUE FALTAVA: Ele instala o Flutter no servidor
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -26,7 +25,8 @@ jobs:
 
       - name: Build Web
         run: |
-          flet build web
+          # O comando abaixo corrige a tela branca informando a subpasta do GitHub
+          flet build web --base-url /conselho-fiscal/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
